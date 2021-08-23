@@ -59,7 +59,7 @@ class User_repository():
             
 
     @staticmethod
-    def get_by_username(self, username):
+    def get_by_username( username):
         cursor = mysql.connection.cursor()
         user = None
         try:

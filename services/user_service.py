@@ -1,5 +1,4 @@
-from datetime import datetime
-
+import datetime
 from flask.json import jsonify
 from repository.user_repo import User_repository
 import uuid
@@ -34,7 +33,7 @@ class User_service():
     def get_all_users():
         message , data , code = User_repository.get_all()
         response = Response(code, data, message)
-        return jsonify(response)
+        return response
 
 
     def create(user):
@@ -58,19 +57,21 @@ class User_service():
 
 
     def user_login(auth):
-        if not auth or not auth.username or not auth.password:
+        print(auth['username'])
+        if not auth or not auth['username'] or not auth['password']:
             response = Response(400, None, "Missing username or password")
             return response
         
-        user = User_repository.get_by_username(auth.username)
+        user = User_repository.get_by_username(auth['username'])
+        print(user['username'])
         if not user:
             response = Response(400, None, "Could not verify user")
             return response
 
-        if check_password_hash(user.password, auth.password):
+        if check_password_hash(user['password'], auth['password']):
             this_time = datetime.datetime.now(pytz.timezone('Asia/Dhaka'))
-            token = jwt.encode({'user_id': user.id, 'exp': this_time+ datetime.timedelta(hours=3)}, app.config['SECRET_KEY'], algorithm='HS256')
-            User_repository.update_token(user.id, token, this_time)
+            token = jwt.encode({'user_id': user['id'], 'exp': this_time+ datetime.timedelta(hours=3)}, app.config['SECRET_KEY'], algorithm='HS256')
+            User_repository.update_jwt_token(user['id'], token, this_time)
             response = Response(200, token, "User logged in successfully")
             return response
         response = Response(400, None, "Could not verify user")

@@ -11,8 +11,9 @@ import jwt
 @app.route('/login')
 def login():
     auth = request.authorization
+    print(auth)
     response = User_service.user_login(auth)
-    return response
+    return jsonify(response)
     # if not auth or not auth.username or not auth.password:
     #     return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
     
