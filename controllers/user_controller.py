@@ -1,4 +1,3 @@
-from _typeshed import Self
 from app import app
 from flask import jsonify, render_template, request, redirect, url_for, flash, session
 from flask_restful import Resource ,reqparse
@@ -13,7 +12,7 @@ class User_controller(Resource):
     
     
     def __init__(self):
-        self.user_service = Self.user_service
+        self.user_service = User_service
         self.user_parser = reqparse.RequestParser()
         self.user_parser.add_argument('username', type=str, required=True)
         self.user_parser.add_argument('password', type=str, required=True)
@@ -36,8 +35,8 @@ class User_controller(Resource):
 
     @app.route('/user/<int:user_id>', methods=['DELETE'])
     def delete_user(self,user_id):
-        user = self.user_service.delete_user(user_id)
-        return jsonify(user)
+        response = self.user_service.delete_user(user_id)
+        return jsonify(response)
 
     @app.route('/user', methods=['POST'])
     def create_user(self):

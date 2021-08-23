@@ -1,6 +1,7 @@
 import locale
 from flask import Flask
 from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
 import yaml
 
 locale.setlocale(locale.LC_TIME,locale.getlocale())
@@ -15,6 +16,7 @@ MYSQL_PASSWORD= db['mysql_password']
 MYSQL_DB= db['mysql_database']
 
 mysql = MySQL(app)
+database = SQLAlchemy(app)
 
 import models
 import controllers

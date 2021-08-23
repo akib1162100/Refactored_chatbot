@@ -51,6 +51,23 @@ class User_repository():
             cursor.close()
 
     @staticmethod
+    def get_by_username(self, username):
+        conn = self.mysql.connect()
+        cursor = conn.cursor()
+        user = None
+        try:
+            cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+            rv = cursor.fetchone()
+            user = self.user(rv[0])
+            return user
+
+        except Exception as e:
+            return None
+        finally:
+            conn.close()
+            cursor.close()
+
+    @staticmethod
     def create(self,user):
         conn = self.mysql.connect()
         cursor = conn.cursor()
@@ -124,3 +141,11 @@ class User_repository():
         conn.close()
         cursor.close()
         return ids
+    
+    @staticmethod
+    def update_jwt_token(self,id,jwt_token,last_login):
+        conn = self.mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('''UPDATE users SET jwt_token = %s, last_login = %s WHERE id = %s''', (jwt_token, last_login, id))
+        conn.commit()
+        conn.close()

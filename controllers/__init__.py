@@ -7,7 +7,7 @@ controllers = [
 
 __all__ = controllers
 for view in controllers:
-    importlib.import_module("controllers.%s" % view[:-2])
+    importlib.import_module("controllers.%s" % view[:-3])
 
 print(
     "Imported controllers: %s" % ", ".join(controllers)

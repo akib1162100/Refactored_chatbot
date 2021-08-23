@@ -1,4 +1,4 @@
-mysql_host: 'akib'
-mysql_user: 'root'
-mysql_password: 'password'
-mysql_database: 'financialapi'
+mysql_host: '192.168.10.64'
+mysql_user: 'sanaul'
+mysql_password: 'sanaul123'
+mysql_database: 'chatbot'

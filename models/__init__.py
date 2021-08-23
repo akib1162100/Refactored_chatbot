@@ -6,7 +6,7 @@ models = [
     f for f in os.listdir(module_path) if f.endswith(".py") and f != "__init__.py"
 ]
 for view in models:
-    importlib.import_module("models.%s" % view[:-2])
+    importlib.import_module("models.%s" % view[:-3])
 
 
 __all__ = models
