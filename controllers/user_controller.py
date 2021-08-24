@@ -26,7 +26,8 @@ class User_controller(Resource):
     @app.route('/user/<user_id>', methods=['PUT'])
     @token_required
     def update_user(current_user,user_id):
-        response= User_service.get_user_data(user_id)
+        user = user_parser.parse_args()
+        response= User_service.update_user(user_id,user.username,user.password)
         return jsonify(response)
 
     @app.route('/user/<user_id>', methods=['DELETE'])

@@ -97,10 +97,12 @@ class User_repository():
         cursor = mysql.connection.cursor()
         user = None
         try:
-            cursor.execute('''UPDATE users SET name = %s, password = %s WHERE id = %s''', (username, generate_password_hash(password), id))
+            cursor.execute('''UPDATE users SET username = %s, password = %s WHERE id = %s''', (username, password, id))
             cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
             rv = cursor.fetchone()
-            user = User(rv[0])
+            field_names = [i[0] for i in cursor.description]
+            user = user_purse(field_names,rv)
+            print(user)
             return "Updated",user,201
         except MySQL.Error as e:
             return e,None,500
